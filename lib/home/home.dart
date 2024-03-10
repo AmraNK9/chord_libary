@@ -4,9 +4,12 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/core/theme.dart';
+import 'package:chord_libary/features/artists/pages/artist_page.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(const MyApp());
 
@@ -120,11 +123,28 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Colors.black),
-        ),
-      ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            )
+          ],
+          backgroundColor: Colors.black,
+          title: Row(
+            children: [
+              const Icon(
+                FontAwesomeIcons.guitar,
+                color: Colors.white,
+              ),
+              Text(
+                "Ngat",
+                style: GoogleFonts.pacifico(color: Colors.white),
+              )
+            ],
+          )),
       body: NotificationListener<ScrollNotification>(
         onNotification: onScrollNotification,
         child: NavigationScreen(iconList[_bottomNavIndex]),
@@ -253,25 +273,22 @@ class _NavigationScreenState extends State<NavigationScreen>
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.background,
-      child: ListView(
-        children: [
-          const SizedBox(height: 64),
-          CircularRevealAnimation(
-            animation: animation,
-            centerOffset: const Offset(80, 80),
-            maxRadius: MediaQuery.of(context).size.longestSide * 1.1,
-            child: Builder(builder: (context) {
-              if (widget.iconData == Icons.person) {
-                return const Text("Artist");
-              }
-              return Icon(
-                widget.iconData,
-                color: AppColors.activeNavigationBarColor,
-                size: 160,
-              );
-            }),
-          ),
-        ],
+      child: CircularRevealAnimation(
+        animation: animation,
+        centerOffset: const Offset(80, 80),
+        maxRadius: MediaQuery.of(context).size.longestSide * 1.1,
+        child: Builder(builder: (context) {
+          if (widget.iconData == Icons.person) {
+            return const ArtistPage();
+          }
+          return Center(
+            child: Icon(
+              widget.iconData,
+              color: AppColors.activeNavigationBarColor,
+              size: 160,
+            ),
+          );
+        }),
       ),
     );
   }
