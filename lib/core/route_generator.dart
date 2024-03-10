@@ -6,7 +6,10 @@ class RouteGenerator {
     final arg = settings.arguments;
     switch (settings.arguments) {
       case '/':
-        return MaterialPageRoute(builder: (context) => const Home());
+        return MaterialPageRoute(
+            builder: (context) => const Home(
+                  title: '',
+                ));
       default:
         return _errorRoute();
     }
