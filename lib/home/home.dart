@@ -4,29 +4,12 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/core/theme.dart';
-import 'package:chord_libary/features/artists/pages/artist_page.dart';
+import 'package:chord_libary/features/GuittarChord/artists/precentation/pages/artist_page.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: AppTheme.get(isLight: true),
-      darkTheme: AppTheme.get(isLight: false),
-      home: const Home(title: 'Animated Navigation Bottom Bar'),
-    );
-  }
-}
 
 class Home extends StatefulWidget {
   const Home({super.key, required this.title});

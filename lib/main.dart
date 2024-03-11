@@ -1,3 +1,4 @@
+import 'package:chord_libary/core/theme.dart';
 import 'package:chord_libary/home/home.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,11 @@ class MusicLibery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Home(
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: AppTheme.get(isLight: true),
+      darkTheme: AppTheme.get(isLight: false),
+      home: const Home(
         title: 'Chord Libery',
       ),
     );
