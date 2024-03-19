@@ -1,0 +1,15 @@
+enum CrudState {
+  initial,
+  creating,
+  createSuccess,
+  createFail,
+  fetching,
+  fetchSuccess,
+  fetchFail,
+  updating,
+  updateSuccess,
+  updateFail,
+  deleting,
+  deleteSuccess,
+  deleteFail,
+}

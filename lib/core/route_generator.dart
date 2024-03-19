@@ -1,9 +1,8 @@
-import 'package:chord_libary/home/home.dart';
+import 'package:chord_libary/presentation/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static generateRoute(RouteSettings settings) {
-    final arg = settings.arguments;
     switch (settings.arguments) {
       case '/':
         return MaterialPageRoute(

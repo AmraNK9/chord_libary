@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  get_it: ^7.6.7
+  either_dart: ^1.0.0
   flutter_bloc: ^8.1.4
   google_fonts: ^6.2.1
   font_awesome_flutter: ^10.7.0
