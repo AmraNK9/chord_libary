@@ -1,9 +1,8 @@
-import 'package:chord_libary/components/dialogs/create_album_dialog.dart';
+import 'package:chord_libary/helper/artist_helper.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/components/widgets/header.dart';
 import 'package:chord_libary/injection_container.dart';
 import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
-import 'package:chord_libary/presentation/bloc/artist/artist_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,9 +14,10 @@ class AlbumsPage extends StatefulWidget {
 }
 
 class _AlbumsPageState extends State<AlbumsPage> {
+  final AlbumHelper albumHelper = getIt<AlbumHelper>();
+
   @override
   Widget build(BuildContext context) {
-    context.read<AlbumsCubit>().getAlbums();
     return Column(
       children: [
         const Header(
@@ -36,7 +36,6 @@ class _AlbumsPageState extends State<AlbumsPage> {
                       );
                     });
               }
-              print(state);
               return Column(
                 children: [
                   Icon(
@@ -50,20 +49,7 @@ class _AlbumsPageState extends State<AlbumsPage> {
                   const Text("No Albums Yet!"),
                   TextButton(
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => MultiBlocProvider(
-                            providers: [
-                              BlocProvider(
-                                create: (context) => getIt<AlbumsCubit>(),
-                              ),
-                              BlocProvider(
-                                create: (context) => getIt<ArtistCubit>(),
-                              ),
-                            ],
-                            child: CreateAlbumDialog(),
-                          ),
-                        );
+                        albumHelper.createAlbum(context);
                       },
                       child: const Text("Create Now"))
                 ],

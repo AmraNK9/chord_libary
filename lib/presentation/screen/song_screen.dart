@@ -1,4 +1,4 @@
-import 'package:chord_libary/components/dialogs/create_song_dialog.dart';
+import 'package:chord_libary/presentation/widgets/create_song_dialog.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/components/widgets/header.dart';
 import 'package:chord_libary/injection_container.dart';

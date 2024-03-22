@@ -2,14 +2,23 @@ import 'dart:async';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:chord_libary/presentation/widgets/create_album_dialog.dart';
+import 'package:chord_libary/presentation/widgets/create_artist_dialog.dart';
+import 'package:chord_libary/presentation/widgets/create_song_dialog.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/core/theme.dart';
+import 'package:chord_libary/injection_container.dart';
+import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
+import 'package:chord_libary/presentation/bloc/artist/artist_cubit.dart';
+import 'package:chord_libary/presentation/bloc/songs/songs_cubit.dart';
 import 'package:chord_libary/presentation/screen/album_screen.dart';
 import 'package:chord_libary/presentation/screen/artist_screen.dart';
 import 'package:chord_libary/presentation/screen/song_screen.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:fluid_dialog/fluid_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -143,10 +152,81 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           color: AppTheme.colorGray,
         ),
         onPressed: () {
-          _fabAnimationController.reset();
-          _borderRadiusAnimationController.reset();
-          _borderRadiusAnimationController.forward();
-          _fabAnimationController.forward();
+          showDialog(
+            context: context,
+            builder: (context) => FluidDialog(
+              // Set the first page of the dialog.
+              rootPage: FluidDialogPage(
+                alignment:
+                    Alignment.center, //Aligns the dialog to the bottom left.
+
+                builder: (context) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      onTap: () {
+                        DialogNavigator.of(context)
+                            .push(FluidDialogPage(builder: (context) {
+                          return BlocProvider(
+                            create: (context) => getIt<ArtistCubit>(),
+                            child: CreateArtistDialog(),
+                          );
+                        }));
+                      },
+                      title: const Text("Create New Artist"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        DialogNavigator.of(context)
+                            .push(FluidDialogPage(builder: (context) {
+                          return MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (context) => getIt<AlbumsCubit>(),
+                              ),
+                              BlocProvider(
+                                create: (context) =>
+                                    getIt<ArtistCubit>()..getArtist(),
+                              ),
+                            ],
+                            child: BlocBuilder<ArtistCubit, ArtistState>(
+                              builder: (context, state) {
+                                if (state is FetchArtistSuccess) {
+                                  return CreateAlbumDialog(
+                                    artists: state.artists,
+                                  );
+                                }
+                                return const Center(
+                                  child: Text('Loading'),
+                                );
+                              },
+                            ),
+                          );
+                        }));
+                      },
+                      title: const Text("Create New Song"),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        DialogNavigator.of(context)
+                            .push(FluidDialogPage(builder: (context) {
+                          return BlocProvider(
+                            create: (context) => getIt<SongsCubit>(),
+                            child: CreateSongDialog(),
+                          );
+                        }));
+                      },
+                      title: const Text("Create New Song"),
+                    )
+                  ],
+                ), // This can be any widget.
+              ),
+            ),
+          );
+          // _fabAnimationController.reset();
+          // _borderRadiusAnimationController.reset();
+          // _borderRadiusAnimationController.forward();
+          // _fabAnimationController.forward();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -97,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "49af28382aefc53562459104f64d16b9dfd1e8ef68c862d5af436cc8356ce5a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.1"
   easy_image_viewer:
     dependency: "direct main"
     description:
@@ -145,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  fluid_dialog:
+    dependency: "direct main"
+    description:
+      name: fluid_dialog
+      sha256: "180c8be98efecc7257e1ee337fef9882256eb2b597dc3e0d41db3392b1ccea81"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -184,6 +200,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
+  gal:
+    dependency: "direct main"
+    description:
+      name: gal
+      sha256: "54c9b72528efce7c66234f3b6dd01cb0304fd8af8196de15571d7bdddb940977"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   get_it:
     dependency: "direct main"
     description:
@@ -384,6 +408,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      sha256: "8036802a00bae2a78fc197af8a158e3e2f7b500561ed23b4c458107685e645bb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.0"
   platform:
     dependency: transitive
     description:
