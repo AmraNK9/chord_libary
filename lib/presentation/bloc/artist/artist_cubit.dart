@@ -1,4 +1,4 @@
-import 'package:chord_libary/data/model/models.dart';
+import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/domain/usecase/artist_usecase.dart';
 import 'package:chord_libary/presentation/bloc/songs/songs_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

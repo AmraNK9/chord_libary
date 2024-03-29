@@ -17,7 +17,7 @@ class Retry extends StatelessWidget {
           child: Column(
             children: [
               const Icon(
-                FontAwesomeIcons.sadCry,
+                FontAwesomeIcons.faceSadCry,
                 size: 140,
               ),
               const SizedBox(

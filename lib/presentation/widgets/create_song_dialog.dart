@@ -1,19 +1,17 @@
-import 'package:chord_libary/data/model/models.dart';
+import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class CreateSongDialog extends StatelessWidget {
-  CreateSongDialog({super.key});
-  // ignore: non_constant_identifier_names
-  late AlbumsCubit albumsCubit;
+  CreateSongDialog({super.key, required this.albums});
   final TextEditingController nameController = TextEditingController();
+  final List<Album> albums;
   int? albumId;
 
   @override
   Widget build(BuildContext context) {
-    albumsCubit = context.read<AlbumsCubit>()..getAlbums();
     return Container(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -49,9 +47,10 @@ class CreateSongDialog extends StatelessWidget {
                             inputDecorationTheme:
                                 const InputDecorationTheme(isDense: true),
                             onSelected: (value) => albumId = value,
-                            dropdownMenuEntries: state.Albumss.map((e) =>
-                                DropdownMenuEntry(
-                                    value: e.id, label: e.title)).toList(),
+                            dropdownMenuEntries: state.albums
+                                .map((e) => DropdownMenuEntry(
+                                    value: e.id, label: e.title))
+                                .toList(),
                           ),
                         ),
                       ],

@@ -1,7 +1,6 @@
-import 'package:chord_libary/data/model/models.dart';
+import 'package:chord_libary/data/model/z_models.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
 class CreateAlbumDialog extends StatelessWidget {

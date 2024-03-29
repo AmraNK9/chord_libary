@@ -1,6 +1,5 @@
 part of 'albums_cubit.dart';
 
-@immutable
 sealed class AlbumsState {
   final CrudState state;
   const AlbumsState({required this.state});
@@ -27,9 +26,9 @@ final class FetchingAlbums extends AlbumsState {
 }
 
 final class FetchAlbumsSuccess extends AlbumsState {
-  final List<Album> Albumss;
+  final List<Album> albums;
   const FetchAlbumsSuccess(
-      {super.state = CrudState.fetchSuccess, required this.Albumss});
+      {super.state = CrudState.fetchSuccess, required this.albums});
 }
 
 final class FetchAlbumsFail extends AlbumsState {

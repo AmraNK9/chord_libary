@@ -1,9 +1,7 @@
-import 'package:bloc/bloc.dart';
-import 'package:chord_libary/data/model/models.dart';
+import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/domain/usecase/album_usecase.dart';
 import 'package:chord_libary/presentation/bloc/songs/songs_state.dart';
-import 'package:meta/meta.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'albums_state.dart';
 
 class AlbumsCubit extends Cubit<AlbumsState> {
@@ -24,6 +22,6 @@ class AlbumsCubit extends Cubit<AlbumsState> {
     emit(const FetchingAlbums());
     final failOrAlbums = await albumHandler.get();
     failOrAlbums.fold((left) => emit(const FetchAlbumsFail()),
-        (right) => emit(FetchAlbumsSuccess(Albumss: right)));
+        (right) => emit(FetchAlbumsSuccess(albums: right)));
   }
 }

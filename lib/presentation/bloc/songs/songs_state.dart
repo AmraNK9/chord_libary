@@ -1,5 +1,5 @@
 import 'package:chord_libary/core/failure.dart';
-import 'package:chord_libary/data/model/models.dart';
+import 'package:chord_libary/data/model/z_models.dart';
 
 sealed class SongsState {
   final CrudState state;

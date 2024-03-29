@@ -1,5 +1,5 @@
 // ignore: must_be_immutable
-import 'package:chord_libary/components/core/mapKey.dart';
+import 'package:chord_libary/components/constant/map_key.dart';
 import 'package:chord_libary/components/core/usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -30,7 +30,7 @@ class _ImageViewState extends State<ImageView> {
 
   late Map<String, dynamic> data;
 
-  List<PopupMenuEntry<dynamic>> Menu = [
+  List<PopupMenuEntry<dynamic>> menu = [
     const PopupMenuItem(
       value: PhotoMenu.save,
       child: Text('Save to device'),
@@ -46,11 +46,9 @@ class _ImageViewState extends State<ImageView> {
       isInit = false;
     }
     imageScaleController.addIgnorableListener(() {
-      print('is zooming - ${imageController.scale}');
-      // if (imageScaleController.scaleState.isScaleStateZooming) {
+      debugPrint('is zooming - ${imageController.scale}');
       if ((imageController.scale ?? 0) < (imageController.initial.scale ?? 1)) {
-        print('zooming true');
-        // isSwiperScrollable = false;
+        debugPrint('zooming true');
         setState(() {
           isSwiperScrollable = false;
         });
@@ -62,8 +60,6 @@ class _ImageViewState extends State<ImageView> {
     });
 
     imageController.addIgnorableListener(() {
-      print('image scale ${imageController.scale}');
-
       if ((imageController.scale ?? 0) >
           (imageController.initial.scale ?? 0.2)) {
         setState(() {
@@ -87,14 +83,13 @@ class _ImageViewState extends State<ImageView> {
 
   @override
   Widget build(BuildContext context) {
-    print('build widget $isSwiperScrollable');
     return Scaffold(
       appBar: AppBar(
         actions: [
           PopupMenuButton(
               onSelected: photoMenuOnChange,
               itemBuilder: (context) {
-                return Menu;
+                return menu;
               })
         ],
       ),

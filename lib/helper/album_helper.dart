@@ -1,4 +1,5 @@
-import 'package:chord_libary/data/model/models.dart';
+import 'package:chord_libary/core/extensions/navigator.dart';
+import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/injection_container.dart';
 import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
 import 'package:chord_libary/presentation/bloc/artist/artist_cubit.dart';
@@ -11,6 +12,7 @@ class AlbumHelper {
   AlbumHelper({required this.albumsCubit});
 
   void createAlbum(BuildContext context) async {
+    context.pop();
     final Album album = await showDialog(
         context: context,
         builder: (context) {

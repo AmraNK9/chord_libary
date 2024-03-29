@@ -4,7 +4,7 @@ import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/domain/nga_repository.dart';
 import 'package:either_dart/either.dart';
 
-class NgatRepositoryImpl implements NgatRepository {
+class NgatRepositoryImpl extends NgatRepository {
   final LocalDataSource localDataSource;
   NgatRepositoryImpl({required this.localDataSource});
   @override

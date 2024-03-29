@@ -1,8 +1,7 @@
-import 'package:chord_libary/presentation/widgets/create_song_dialog.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/components/widgets/header.dart';
+import 'package:chord_libary/helper/song_helper.dart';
 import 'package:chord_libary/injection_container.dart';
-import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
 import 'package:chord_libary/presentation/bloc/songs/songs_cubit.dart';
 import 'package:chord_libary/presentation/bloc/songs/songs_state.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +15,7 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
+  final SongHelper songHelper = getIt<SongHelper>();
   @override
   Widget build(BuildContext context) {
     context.read<SongsCubit>().getSongs();
@@ -37,7 +37,6 @@ class _SongPageState extends State<SongPage> {
                       );
                     });
               }
-              print(state);
               return Column(
                 children: [
                   Icon(
@@ -51,19 +50,7 @@ class _SongPageState extends State<SongPage> {
                   const Text("No Song Yet!"),
                   TextButton(
                       onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => MultiBlocProvider(
-                                  providers: [
-                                    BlocProvider(
-                                      create: (context) => getIt<SongsCubit>(),
-                                    ),
-                                    BlocProvider(
-                                      create: (context) => getIt<AlbumsCubit>(),
-                                    ),
-                                  ],
-                                  child: CreateSongDialog(),
-                                ));
+                        songHelper.createSong(context);
                       },
                       child: const Text("Create Now"))
                 ],

@@ -1,4 +1,4 @@
-import 'package:chord_libary/helper/artist_helper.dart';
+import 'package:chord_libary/helper/album_helper.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/components/widgets/header.dart';
 import 'package:chord_libary/injection_container.dart';
@@ -18,19 +18,20 @@ class _AlbumsPageState extends State<AlbumsPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<AlbumsCubit>().getAlbums();
     return Column(
       children: [
         const Header(
-          title: "Albumss",
+          title: "Albums",
         ),
         Expanded(
           child: BlocBuilder<AlbumsCubit, AlbumsState>(
             builder: (context, state) {
-              if (state is FetchAlbumsSuccess && state.Albumss.isNotEmpty) {
+              if (state is FetchAlbumsSuccess && state.albums.isNotEmpty) {
                 return ListView.builder(
-                    itemCount: state.Albumss.length,
+                    itemCount: state.albums.length,
                     itemBuilder: (context, index) {
-                      final albums = state.Albumss[index];
+                      final albums = state.albums[index];
                       return ListTile(
                         title: Text(albums.title),
                       );

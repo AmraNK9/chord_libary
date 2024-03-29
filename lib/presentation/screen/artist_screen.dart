@@ -1,5 +1,5 @@
 import 'package:chord_libary/core/constants.dart';
-import 'package:chord_libary/presentation/widgets/create_artist_dialog.dart';
+import 'package:chord_libary/helper/artist_helper.dart';
 import 'package:chord_libary/components/widgets/header.dart';
 import 'package:chord_libary/injection_container.dart';
 import 'package:chord_libary/presentation/bloc/artist/artist_cubit.dart';
@@ -14,6 +14,7 @@ class ArtistPage extends StatefulWidget {
 }
 
 class _ArtistPageState extends State<ArtistPage> {
+  final ArtistHelper artistHelper = getIt<ArtistHelper>();
   @override
   Widget build(BuildContext context) {
     context.read<ArtistCubit>().getArtist();
@@ -35,7 +36,6 @@ class _ArtistPageState extends State<ArtistPage> {
                       );
                     });
               }
-              print(state);
               return Column(
                 children: [
                   Icon(
@@ -49,12 +49,7 @@ class _ArtistPageState extends State<ArtistPage> {
                   const Text("No Artist Yet!"),
                   TextButton(
                       onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => BlocProvider(
-                                  create: (context) => getIt<ArtistCubit>(),
-                                  child: CreateArtistDialog(),
-                                ));
+                        artistHelper.createArtist(context);
                       },
                       child: const Text("Create Now"))
                 ],
