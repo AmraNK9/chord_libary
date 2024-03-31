@@ -1,5 +1,8 @@
 import 'package:chord_libary/core/failure.dart';
 import 'package:chord_libary/data/model/z_models.dart';
+import 'package:chord_libary/domain/enties/album_entity.dart';
+import 'package:chord_libary/domain/enties/artist_entity.dart';
+import 'package:chord_libary/domain/enties/song_entity.dart';
 import 'package:either_dart/either.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -60,13 +63,35 @@ class LocalDataSource {
     }
   }
 
-  Future<Either<Failure, List<Artist>>> getArtists() async {
+  Future<Either<Failure, int>> deleteArtist(Artist artist) async {
+    try {
+      final database = await this.database;
+      final result = await database
+          .delete(_artistTable, where: 'id=', whereArgs: [artist.id]);
+      return Right(result);
+    } catch (e) {
+      return Left(LocalFailure(error: e.toString()));
+    }
+  }
+
+  Future<Either<Failure, List<ArtistEntity>>> getArtists() async {
     try {
       final database = await this.database;
       final maps = await database.query(_artistTable);
       final artistList =
-          List.generate(maps.length, (i) => Artist.fromMap(maps[i]));
+          List.generate(maps.length, (i) => Artist.fromMap(maps[i]).toEntity());
       return Right(artistList);
+    } catch (e) {
+      return Left(LocalFailure(error: e.toString()));
+    }
+  }
+
+  Future<Either<Failure, int>> deleteAlbum(Album album) async {
+    try {
+      final database = await this.database;
+      final result = await database
+          .delete(_albumTable, where: "id = ?", whereArgs: [album.id]);
+      return Right(result);
     } catch (e) {
       return Left(LocalFailure(error: e.toString()));
     }
@@ -82,23 +107,26 @@ class LocalDataSource {
     }
   }
 
-  Future<Either<Failure, List<Album>>> getAlbums() async {
+  Future<Either<Failure, List<AlbumEntity>>> getAlbums() async {
     try {
       final database = await this.database;
       final maps = await database.query(_albumTable);
-      final result = List.generate(maps.length, (i) => Album.fromMap(maps[i]));
+      final result =
+          List.generate(maps.length, (i) => Album.fromMap(maps[i]).toEntity());
       return Right(result);
     } catch (e) {
       return Left(LocalFailure(error: e.toString()));
     }
   }
 
-  Future<Either<Failure, List<Album>>> getAlbumsByArtist(int artistId) async {
+  Future<Either<Failure, List<AlbumEntity>>> getAlbumsByArtist(
+      int artistId) async {
     try {
       final database = await this.database;
       final maps = await database
           .query(_albumTable, where: 'artistId = ?', whereArgs: [artistId]);
-      final result = List.generate(maps.length, (i) => Album.fromMap(maps[i]));
+      final result =
+          List.generate(maps.length, (i) => Album.fromMap(maps[i]).toEntity());
       return Right(result);
     } catch (e) {
       return Left(LocalFailure(error: e.toString()));
@@ -115,23 +143,36 @@ class LocalDataSource {
     }
   }
 
-  Future<Either<Failure, List<Song>>> getSongs() async {
+  Future<Either<Failure, int>> deleteSong(Song song) async {
     try {
       final database = await this.database;
-      final maps = await database.query(_songTable);
-      final result = List.generate(maps.length, (i) => Song.fromMap(maps[i]));
+      final result =
+          await database.delete(_songTable, where: 'id=', whereArgs: [song.id]);
       return Right(result);
     } catch (e) {
       return Left(LocalFailure(error: e.toString()));
     }
   }
 
-  Future<Either<Failure, List<Song>>> getSongsByAlbum(int albumId) async {
+  Future<Either<Failure, List<SongEntity>>> getSongs() async {
+    try {
+      final database = await this.database;
+      final maps = await database.query(_songTable);
+      final result =
+          List.generate(maps.length, (i) => Song.fromMap(maps[i]).toEntity());
+      return Right(result);
+    } catch (e) {
+      return Left(LocalFailure(error: e.toString()));
+    }
+  }
+
+  Future<Either<Failure, List<SongEntity>>> getSongsByAlbum(int albumId) async {
     try {
       final database = await this.database;
       final maps = await database
           .query(_songTable, where: 'albumId = ?', whereArgs: [albumId]);
-      final result = List.generate(maps.length, (i) => Song.fromMap(maps[i]));
+      final result =
+          List.generate(maps.length, (i) => Song.fromMap(maps[i]).toEntity());
 
       return Right(result);
     } catch (e) {
@@ -139,7 +180,8 @@ class LocalDataSource {
     }
   }
 
-  Future<Either<Failure, List<Song>>> getSongsByArtist(int artistId) async {
+  Future<Either<Failure, List<SongEntity>>> getSongsByArtist(
+      int artistId) async {
     try {
       final database = await this.database;
       final maps = await database.rawQuery('''
@@ -149,7 +191,8 @@ class LocalDataSource {
       WHERE a.artistId = ?
     ''', [artistId]);
 
-      final result = List.generate(maps.length, (i) => Song.fromMap(maps[i]));
+      final result =
+          List.generate(maps.length, (i) => Song.fromMap(maps[i]).toEntity());
 
       return Right(result);
     } catch (e) {

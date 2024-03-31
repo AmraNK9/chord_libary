@@ -1,36 +1,17 @@
 part of 'albums_cubit.dart';
 
-sealed class AlbumsState {
+final class AlbumCrudState {
   final CrudState state;
-  const AlbumsState({required this.state});
-}
+  final List<AlbumEntity> albums;
+  final String? error;
 
-final class AlbumsInitial extends AlbumsState {
-  const AlbumsInitial({super.state = CrudState.initial});
-}
+  AlbumCrudState({required this.state, required this.albums, this.error});
 
-final class AlbumsCreating extends AlbumsState {
-  const AlbumsCreating({super.state = CrudState.creating});
-}
-
-final class AlbumsCreteSuccess extends AlbumsState {
-  const AlbumsCreteSuccess({super.state = CrudState.createSuccess});
-}
-
-final class AlbumsCreateFail extends AlbumsState {
-  const AlbumsCreateFail({super.state = CrudState.createFail});
-}
-
-final class FetchingAlbums extends AlbumsState {
-  const FetchingAlbums({super.state = CrudState.fetching});
-}
-
-final class FetchAlbumsSuccess extends AlbumsState {
-  final List<Album> albums;
-  const FetchAlbumsSuccess(
-      {super.state = CrudState.fetchSuccess, required this.albums});
-}
-
-final class FetchAlbumsFail extends AlbumsState {
-  const FetchAlbumsFail({super.state = CrudState.fetchFail});
+  AlbumCrudState copyWith(
+      {CrudState? state, List<AlbumEntity>? albums, String? error}) {
+    return AlbumCrudState(
+        state: state ?? this.state,
+        albums: albums ?? this.albums,
+        error: error ?? this.error);
+  }
 }

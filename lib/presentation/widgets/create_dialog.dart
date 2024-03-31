@@ -1,9 +1,7 @@
-import 'package:chord_libary/helper/album_helper.dart';
-import 'package:chord_libary/helper/artist_helper.dart';
-import 'package:chord_libary/helper/song_helper.dart';
-import 'package:chord_libary/injection_container.dart';
 import 'package:fluid_dialog/fluid_dialog.dart';
 import 'package:flutter/material.dart';
+
+enum CreatingType { artist, song, album }
 
 class CreateDialog extends StatelessWidget {
   const CreateDialog({
@@ -22,19 +20,22 @@ class CreateDialog extends StatelessWidget {
           children: [
             ListTile(
               onTap: () {
-                getIt<ArtistHelper>().createArtist(context);
+                Navigator.of(context).pop(CreatingType.artist);
+                // getIt<ArtistHelper>().createArtist(context);
               },
               title: const Text("Create New Artist"),
             ),
             ListTile(
               onTap: () {
-                getIt<AlbumHelper>().createAlbum(context);
+                Navigator.of(context).pop(CreatingType.album);
+                // getIt<AlbumHelper>().createAlbum(context);
               },
               title: const Text("Create New Album"),
             ),
             ListTile(
               onTap: () {
-                getIt<SongHelper>().createSong(context);
+                Navigator.of(context).pop(CreatingType.song);
+                // SongHelper(songsCubit: songCubit).createSong(context);
               },
               title: const Text("Create New Song"),
             )

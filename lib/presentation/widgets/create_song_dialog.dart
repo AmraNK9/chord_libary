@@ -1,4 +1,6 @@
+import 'package:chord_libary/core/enum/enum_collection.dart';
 import 'package:chord_libary/data/model/z_models.dart';
+import 'package:chord_libary/domain/enties/album_entity.dart';
 import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CreateSongDialog extends StatelessWidget {
   CreateSongDialog({super.key, required this.albums});
   final TextEditingController nameController = TextEditingController();
-  final List<Album> albums;
+  final List<AlbumEntity> albums;
   int? albumId;
 
   @override
@@ -36,9 +38,9 @@ class CreateSongDialog extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              BlocBuilder<AlbumsCubit, AlbumsState>(
+              BlocBuilder<AlbumsCubit, AlbumCrudState>(
                 builder: (context, state) {
-                  if (state is FetchAlbumsSuccess) {
+                  if (state.state == CrudState.fetchSuccess) {
                     return Row(
                       children: [
                         Expanded(

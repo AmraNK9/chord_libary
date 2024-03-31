@@ -6,12 +6,19 @@ import 'package:chord_libary/components/screen/animation_screen.dart';
 import 'package:chord_libary/components/screen/comming_soon_screen.dart';
 import 'package:chord_libary/core/constants.dart';
 import 'package:chord_libary/core/theme.dart';
+import 'package:chord_libary/helper/album_helper.dart';
+import 'package:chord_libary/helper/artist_helper.dart';
+import 'package:chord_libary/helper/song_helper.dart';
+import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
+import 'package:chord_libary/presentation/bloc/artist/artist_cubit.dart';
+import 'package:chord_libary/presentation/bloc/songs/songs_cubit.dart';
 import 'package:chord_libary/presentation/screen/album_screen.dart';
 import 'package:chord_libary/presentation/screen/artist_screen.dart';
 import 'package:chord_libary/presentation/screen/song_screen.dart';
 import 'package:chord_libary/presentation/widgets/create_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -151,11 +158,26 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
           Icons.add,
           color: AppTheme.colorGray,
         ),
-        onPressed: () {
-          showDialog(
+        onPressed: () async {
+          final chosenType = await showDialog(
             context: context,
             builder: (context) => const CreateDialog(),
           );
+
+          if (context.mounted) {
+            switch (chosenType) {
+              case CreatingType.artist:
+                ArtistHelper(artistCubit: (context.read<ArtistCubit>()))
+                    .createArtist(context);
+              case CreatingType.song:
+                SongHelper(songsCubit: context.read<SongsCubit>())
+                    .createSong(context);
+              case CreatingType.album:
+                AlbumHelper(albumsCubit: context.read<AlbumsCubit>())
+                    .createAlbum(context);
+            }
+          }
+
           // _fabAnimationController.reset();
           // _borderRadiusAnimationController.reset();
           // _borderRadiusAnimationController.forward();

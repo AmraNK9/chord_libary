@@ -1,11 +1,9 @@
 import 'package:chord_libary/data/model/z_models.dart';
-import 'package:chord_libary/presentation/bloc/artist/artist_cubit.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CreateArtistDialog extends StatelessWidget {
   CreateArtistDialog({super.key});
-  late ArtistCubit artistCubit;
   final TextEditingController nameController = TextEditingController();
 
   @override
@@ -17,13 +15,13 @@ class CreateArtistDialog extends StatelessWidget {
             children: [
               const Text(
                 "Create New Artist",
-                // style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 8,
               ),
               TextField(
-                // style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 controller: nameController,
                 decoration: const InputDecoration(
                   isDense: true,
@@ -42,7 +40,6 @@ class CreateArtistDialog extends StatelessWidget {
                             final artist = Artist(
                                 id: DateTime.now().microsecondsSinceEpoch,
                                 name: nameController.text);
-                            // artistCubit.createAtist(artist);
                             Navigator.of(context).pop(artist);
                           },
                           child: const Text("Save"))),

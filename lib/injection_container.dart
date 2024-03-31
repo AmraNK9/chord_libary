@@ -1,5 +1,5 @@
 import 'package:chord_libary/data/datasource/local_datasource.dart';
-import 'package:chord_libary/data/ngat_repository_impl.dart';
+import 'package:chord_libary/data/repository/ngat_repository_impl.dart';
 import 'package:chord_libary/domain/usecase/album_usecase.dart';
 import 'package:chord_libary/domain/usecase/artist_usecase.dart';
 import 'package:chord_libary/domain/usecase/song_usecase.dart';
@@ -14,7 +14,9 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 void init() {
   // Helper
-  getIt.registerLazySingleton(() => AlbumHelper(albumsCubit: getIt()));
+  getIt.registerLazySingleton(() => AlbumHelper(
+        albumsCubit: getIt(),
+      ));
   getIt.registerLazySingleton(() => ArtistHelper(artistCubit: getIt()));
   getIt.registerLazySingleton(() => SongHelper(songsCubit: getIt()));
   //Bloc

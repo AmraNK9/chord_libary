@@ -6,6 +6,7 @@ class AppTheme {
 
   static get({required bool isLight}) {
     return ThemeData(
+      buttonTheme: const ButtonThemeData(buttonColor: Colors.white),
       focusColor: AppColors.secondary,
       primaryColor: AppColors.secondary,
       inputDecorationTheme: InputDecorationTheme(

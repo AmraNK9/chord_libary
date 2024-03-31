@@ -1,4 +1,5 @@
-import 'package:chord_libary/core/extensions/navigator.dart';
+import 'package:chord_libary/components/dialogs/comfirm_dialog.dart';
+import 'package:chord_libary/core/enum/enum_collection.dart';
 import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/injection_container.dart';
 import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
@@ -12,16 +13,15 @@ class SongHelper {
   SongHelper({required this.songsCubit});
 
   void createSong(BuildContext context) async {
-    context.pop();
     final Song song = await showDialog(
         context: context,
         builder: (context) {
           return Dialog(
             child: BlocProvider(
               create: (context) => getIt<AlbumsCubit>()..getAlbums(),
-              child: BlocBuilder<AlbumsCubit, AlbumsState>(
+              child: BlocBuilder<AlbumsCubit, AlbumCrudState>(
                 builder: (context, state) {
-                  if (state is FetchAlbumsSuccess) {
+                  if (state.state == CrudState.fetchSuccess) {
                     return CreateSongDialog(
                       albums: state.albums,
                     );
@@ -35,5 +35,10 @@ class SongHelper {
           );
         });
     songsCubit.createSong(song);
+  }
+
+  void deleteSong(BuildContext context, Song song) async {
+    final isSure = await showConfirmDialog(context);
+    if (isSure ?? false) songsCubit.deleteSong(song);
   }
 }

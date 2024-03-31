@@ -1,4 +1,5 @@
 import 'package:chord_libary/core/constants.dart';
+import 'package:chord_libary/core/enum/enum_collection.dart';
 import 'package:chord_libary/helper/artist_helper.dart';
 import 'package:chord_libary/components/widgets/header.dart';
 import 'package:chord_libary/injection_container.dart';
@@ -26,7 +27,7 @@ class _ArtistPageState extends State<ArtistPage> {
         Expanded(
           child: BlocBuilder<ArtistCubit, ArtistState>(
             builder: (context, state) {
-              if (state is FetchArtistSuccess) {
+              if (state.state == CrudState.fetching) {
                 return ListView.builder(
                     itemCount: state.artists.length,
                     itemBuilder: (context, index) {

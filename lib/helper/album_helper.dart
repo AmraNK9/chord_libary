@@ -1,4 +1,5 @@
-import 'package:chord_libary/core/extensions/navigator.dart';
+import 'package:chord_libary/components/dialogs/comfirm_dialog.dart';
+import 'package:chord_libary/core/enum/enum_collection.dart';
 import 'package:chord_libary/data/model/z_models.dart';
 import 'package:chord_libary/injection_container.dart';
 import 'package:chord_libary/presentation/bloc/albums/albums_cubit.dart';
@@ -12,7 +13,6 @@ class AlbumHelper {
   AlbumHelper({required this.albumsCubit});
 
   void createAlbum(BuildContext context) async {
-    context.pop();
     final Album album = await showDialog(
         context: context,
         builder: (context) {
@@ -21,7 +21,7 @@ class AlbumHelper {
               create: (context) => getIt<ArtistCubit>()..getArtist(),
               child: BlocBuilder<ArtistCubit, ArtistState>(
                 builder: (context, state) {
-                  if (state is FetchArtistSuccess) {
+                  if (state.state == CrudState.fetchSuccess) {
                     return CreateAlbumDialog(
                       artists: state.artists,
                     );
@@ -35,5 +35,13 @@ class AlbumHelper {
           );
         });
     albumsCubit.createAlbum(album);
+  }
+
+  void deleteAlbum(BuildContext context, Album album) async {
+    final isSure = await showConfirmDialog(context,
+        label: ' ${album.title} will be delete!');
+
+    if (isSure ?? false) albumsCubit.deleteAlbum(album);
+    debugPrint("________Delete in Helper________");
   }
 }

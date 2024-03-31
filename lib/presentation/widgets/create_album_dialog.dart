@@ -1,4 +1,5 @@
 import 'package:chord_libary/data/model/z_models.dart';
+import 'package:chord_libary/domain/enties/artist_entity.dart';
 
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 class CreateAlbumDialog extends StatelessWidget {
   CreateAlbumDialog({super.key, required this.artists});
   // ignore: non_constant_identifier_names
-  final List<Artist> artists;
+  final List<ArtistEntity> artists;
   final TextEditingController nameController = TextEditingController();
   int? artistId;
 
